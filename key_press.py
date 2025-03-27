@@ -1,9 +1,8 @@
 import listen
-from typing import Union, NoReturn
 import components.speak as speak
 import keyboard
 
-def press_keys() -> Union[None, NoReturn]:
+def press_keys() -> None:
     while True:
         # asking for keys to press
         print("What to press ?")
@@ -14,7 +13,11 @@ def press_keys() -> Union[None, NoReturn]:
         if text == "over" or text == "finish" or text == "exit" or text == "stop":
             return None
 
-        keyboard.press_and_release(text)
+        try:
+            keyboard.press_and_release(text)
+        except Exception as e:
+            print(e)
+            return None
 
 
 if __name__ == '__main__':

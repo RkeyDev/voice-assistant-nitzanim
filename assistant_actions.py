@@ -5,6 +5,7 @@ import os
 import subprocess
 from typing import Union, NoReturn
 from key_press import press_keys
+from voice_to_text import transcribe
 
 def repeat() -> None:
     # asking for repeat
@@ -77,10 +78,16 @@ def start_comments(text: str = "") -> None:
         text = remove_from_speech("search |search", text)
         search_chrome()
 
-    # commend key
+    # commend press / key
     if search_speech("keys|press", text):
         text = remove_from_speech("press keys |press key |press keys|press key|press |press|keys |keys|key |key", text)
         press_keys()
+
+    # comment transcribe
+    if search_speech("transcribe | transcribe", text):
+        text = remove_from_speech("transcribe |transcribe", text)
+        transcribe()
+
 
     # commends handled - asking again
     if text == "" or text == " ":
