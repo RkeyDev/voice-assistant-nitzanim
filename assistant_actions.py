@@ -4,7 +4,8 @@ import re
 import os
 import subprocess
 from typing import Union, NoReturn
-
+import threading 
+import components.eye_tracker as eye_tracker
 
 def repeat() -> None:
     # asking for repeat
@@ -77,14 +78,17 @@ def start_comments(text: str = "") -> None:
         text = remove_from_speech("search |search", text)
         search_chrome()
 
+    if search_speech("mouse",text):
+        print("Starting eye tracker")
+        threading.Thread(target=eye_tracker.run_eye_tracker()).start() #Run eye tracker
+        
+
     # commends handled - asking again
     print("What would you like to do ?")
     speak.speak("What would you like to do ?")
     new_commend: str = listen.listen()
     start_comments(new_commend)
 
-
-    # endregion
 
 
 if __name__ == '__main__':
