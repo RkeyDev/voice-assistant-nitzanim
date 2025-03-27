@@ -1,10 +1,13 @@
 import listen as listen
 import components.speak as speak
 import assistant_actions
-
+import components.eye_tracker as eye_tracker
+import threading
 
 def main() -> None:
     print("start")
+    print("starting eye tracker")
+    threading.Thread(target=eye_tracker.run_eye_tracker).start() #Starting eye tracker
 
     trys: int = 0
     while True:
