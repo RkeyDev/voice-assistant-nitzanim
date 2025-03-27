@@ -4,7 +4,7 @@ import re
 import os
 import subprocess
 from typing import Union, NoReturn
-
+from key_press import press_keys
 
 def repeat() -> None:
     # asking for repeat
@@ -76,6 +76,11 @@ def start_comments(text: str = "") -> None:
     if search_speech("search", text):
         text = remove_from_speech("search |search", text)
         search_chrome()
+
+    # commend key
+    if search_speech("keys|press", text):
+        text = remove_from_speech("press keys |press key |press keys|press key|press |press|keys |keys|key |key", text)
+        press_keys()
 
     # commends handled - asking again
     if text == "" or text == " ":
