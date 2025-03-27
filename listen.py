@@ -1,5 +1,5 @@
 import speech_recognition as s
-import speak
+import components.speak as speak
 from typing import NoReturn, Union
 
 

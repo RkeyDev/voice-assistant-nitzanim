@@ -1,6 +1,6 @@
-import listen
-import speak
-import actions
+import listen as listen
+import components.speak as speak
+import assistant_actions
 
 
 def main() -> None:
@@ -15,7 +15,7 @@ def main() -> None:
                 print("Hi ,I'm python")
                 speak.speak("Hi , I'm python")
                 # endregion
-                actions.start_comments(text)
+                assistant_actions.start_comments(text)
                 # region end greeting
                 print("thanks for using python, good by :)")
                 speak.speak("thanks for using python, good by")

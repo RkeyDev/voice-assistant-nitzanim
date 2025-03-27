@@ -1,5 +1,5 @@
-import listen
-import speak
+import listen as listen
+import components.speak as speak
 import re
 import os
 import subprocess
