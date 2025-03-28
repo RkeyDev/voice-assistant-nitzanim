@@ -7,6 +7,7 @@ from typing import Union, NoReturn
 import threading
 import components.eye_tracker as eye_tracker
 import send_whatsapp
+import translating
 
 
 def repeat() -> None:
@@ -90,6 +91,12 @@ def start_comments(text: str = "") -> None:
     if search_speech("send|email|text", text):
         text = remove_from_speech("send |sent|text |text|email |email", text)
         send_whatsapp.send_whatapp()
+
+    # commend translate
+    if search_speech("translate", text):
+        text = remove_from_speech("translate |translate", text)
+        translating.translate("he")
+
 
     # commends handled - asking again
     print("What would you like to do ?")

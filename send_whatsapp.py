@@ -6,10 +6,10 @@ import time
 
 
 def send_whatapp() -> None:
-    # asking for keys to press
+    # asking for a message
     print("What is the message ?")
     speak.speak("What is the message ?")
-    text: str = listen.listen()  # listening what key to press
+    text: str = listen.listen()  # listening for a message
 
     # exit key press
     if text == "over" or text == "finish" or text == "exit" or text == "stop":
