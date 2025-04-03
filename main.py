@@ -1,11 +1,12 @@
 import listen as listen
 import components.speak as speak
 import assistant_actions
+from UI import main_screen as window
+import threading
 
 
-def main() -> None:
-    print("start")
-
+def startApplication() -> None:
+    print("Starting")
     trys: int = 0
     while True:
         try:
@@ -48,6 +49,11 @@ def main() -> None:
             break
 
     print("finish")
+
+
+def main() -> None:
+    screen = window.MainScreen(run_app_func=startApplication)
+    target=screen.start_window()
 
 
 if __name__ == '__main__':
