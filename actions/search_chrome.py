@@ -2,6 +2,7 @@ import components.speak as speak
 import listen
 import subprocess
 
+
 def search_chrome() -> None:
     # asking for search
     print("What to search ?")

@@ -4,8 +4,11 @@ import re
 import os
 import subprocess
 from typing import Union, NoReturn
-import threading 
+import threading
 import components.eye_tracker as eye_tracker
+import send_whatsapp
+import translating
+
 
 def repeat() -> None:
     # asking for repeat
@@ -56,7 +59,7 @@ def remove_from_speech(pattern: str, text: str) -> str:
 def start_comments(text: str = "") -> None:
     # removing starting sentences(unneeded words)
     text = remove_from_speech(r"hey |hey|hi |hi|hello |hello|python |python|peyton |peyton|thank you |thank "
-                              r"you|thanks |thanks|please |please|play |play|\\d", text)
+                              r"you|thanks |thanks|please |please|play |play|\\d|an |an", text)
 
     # region searching for talking patterns
     # stopping commend
@@ -78,10 +81,22 @@ def start_comments(text: str = "") -> None:
         text = remove_from_speech("search |search", text)
         search_chrome()
 
-    if search_speech("mouse",text):
+    # commend mouse
+    if search_speech("mouse", text):
+        text = remove_from_speech("mouse |mouse", text)
         print("Starting eye tracker")
-        threading.Thread(target=eye_tracker.run_eye_tracker()).start() #Run eye tracker
-        
+        threading.Thread(target=eye_tracker.run_eye_tracker()).start()  # run eye tracker
+
+    # commend send
+    if search_speech("send|email|text", text):
+        text = remove_from_speech("send |sent|text |text|email |email", text)
+        send_whatsapp.send_whatapp()
+
+    # commend translate
+    if search_speech("translate", text):
+        text = remove_from_speech("translate |translate", text)
+        translating.translate("he")
+
 
     # commends handled - asking again
     print("What would you like to do ?")
@@ -89,6 +104,7 @@ def start_comments(text: str = "") -> None:
     new_commend: str = listen.listen()
     start_comments(new_commend)
 
+    # endregion
 
 
 if __name__ == '__main__':

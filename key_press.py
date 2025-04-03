@@ -2,6 +2,7 @@ import listen
 import components.speak as speak
 import keyboard
 
+
 def press_keys() -> None:
     while True:
         # asking for keys to press
