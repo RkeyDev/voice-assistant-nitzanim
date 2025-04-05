@@ -46,6 +46,7 @@ class Bird:
 
     def draw(self, screen: pygame.Surface) -> None:
         """Draw the bird on the screen."""
+        pygame.draw.rect(screen, (0, 0, 255), self.rect, 2)
         screen.blit(self.image, self.rect.topleft)
 
     def get_rect(self) -> pygame.Rect:
@@ -128,15 +129,11 @@ def main() -> None:
             pipe1.draw(screen)
             pipe2.draw(screen)
 
-        #     # Collision detection with pipes
-        #     bird_rect = bird.get_rect()
-        #     top_rect, bottom_rect = pipe.get_rects()
-        #
-        #     # Checking for collision only when bird intersects with pipes (both in X and Y positions)
-        #     if bird_rect.colliderect(top_rect) or bird_rect.colliderect(bottom_rect):
-        #         running = False
+            # Collision detection with pipes
+            if bird.rect.colliderect(pipes[0][0]) or bird.rect.colliderect(pipes[0][1]):
+                running = False
 
-        # Check if bird bound
+        # Check if bird in bounds
         if bird.rect.bottom >= SCREEN_HEIGHT or bird.rect.top <= 0:
             running = False
 

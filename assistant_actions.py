@@ -97,7 +97,6 @@ def start_comments(text: str = "") -> None:
         text = remove_from_speech("translate |translate", text)
         translating.translate("he")
 
-
     # commends handled - asking again
     print("What would you like to do ?")
     speak.speak("What would you like to do ?")
