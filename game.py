@@ -165,26 +165,33 @@ def main() -> None:
     score: int = 0
 
     while running:
+
+        # Event loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 bird.jump()
 
+        # Background
         screen.blit(background, (0, 0))
 
+        # Bird update
         bird.update()
         bird.draw(screen)
 
+        # Pipes update and Bird collision
         for pipe1, pipe2 in pipes:
             pipe1.update()
             pipe2.update()
             pipe1.draw(screen)
             pipe2.draw(screen)
 
+            # Check bird pipes collisions
             if bird.rect.colliderect(pipe1.rect) or bird.rect.colliderect(pipe2.rect):
                 running = False
 
+        # Score check
         for pipe1, pipe2 in pipes:
             if not pipe1.scored and pipe1.rect.right < bird.rect.left:
                 score += 1
