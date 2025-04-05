@@ -8,7 +8,7 @@ SCREEN_WIDTH: int = 400
 SCREEN_HEIGHT: int = 600
 GRAVITY: float = 0.5
 JUMP_STRENGTH: int = -10
-PIPE_GAP: int = 300
+PIPE_GAP: int = 250
 BASE_SPEED: int = 3
 SPEED_UP: float = 0.002
 SCORE_FILE: str = "game_top_scores.json"
@@ -77,7 +77,7 @@ def show_game_over(score: int) -> None:
                 running = False
 
         # Check if 5 seconds have passed
-        if pygame.time.get_ticks() - start_ticks >= 5000:
+        if pygame.time.get_ticks() - start_ticks >= 10000:
             running = False
 
         pygame.display.update()
@@ -145,11 +145,20 @@ class Pipe:
             screen.blit(pygame.transform.flip(self.image, False, True), self.rect.topleft)
 
     def make_opposite(self):
+        # Create a new pipe at the same left position but opposite top/bottom
         pipe = Pipe(self.rect.left, not self.top_bottom)
-        if self.top_bottom and (diff := pipe.rect.top - (self.rect.bottom + PIPE_GAP)) < 0:
-            pipe.rect.top += diff
-        elif (not self.top_bottom) and (diff := self.rect.top - (pipe.rect.bottom + PIPE_GAP)) < 0:
-            pipe.rect.bottom -= diff
+
+        if self.top_bottom:
+            # Calculate the desired position for the top of the new pipe (bottom of the current pipe + gap)
+            desired_top = self.rect.bottom + PIPE_GAP
+            if pipe.rect.top < desired_top:
+                pipe.rect.top = desired_top  # Enforce minimum gap if needed
+
+        else:
+            # Calculate the desired position for the bottom of the new pipe (top of the current pipe - gap)
+            desired_bottom = self.rect.top - PIPE_GAP
+            if pipe.rect.bottom > desired_bottom:
+                pipe.rect.bottom = desired_bottom  # Enforce minimum gap if needed
 
         return pipe
 
