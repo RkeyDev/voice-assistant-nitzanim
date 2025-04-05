@@ -2,6 +2,7 @@ import listen
 from typing import Union
 import components.speak as speak
 
+
 def transcribe() -> Union[str, None]:
     while True:
         # asking for transcribe

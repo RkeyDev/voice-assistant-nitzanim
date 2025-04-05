@@ -228,7 +228,6 @@ def start_game() -> None:
         show_game_over(score)
         pygame.quit()
 
-
     main()
 
 

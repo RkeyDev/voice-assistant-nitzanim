@@ -1,13 +1,29 @@
 import os
 import components.speak as speak
 from typing import Union, NoReturn
+from assistant_actions import search_speech
 
 
 def open_applications(text: str) -> Union[str | NoReturn]:
-    # in progress
-    calendar_shortcut_path = r"C:\Users\WIN11\Desktop\Google calendar.lnk"
-    os.startfile(calendar_shortcut_path)
-    print(text)
+    path = ""
 
-    print(NotImplementedError("open - not implemented"))
-    speak.speak("open - not implemented")
+    if search_speech("calender", text):
+        path = r"C:\Users\WIN11\Desktop\Google calendar.lnk"
+
+    # TODO add more application
+
+    if path == "":
+        raise Exception(f"{text} application not found/is not an option")
+
+    try:
+        os.startfile(path)
+        print(f"starting {text} application")
+        speak.speak(f"starting {text} application")
+
+    except FileNotFoundError:
+        print(f"The {text} application is not found")
+        speak.speak(f"The {text} application is not found")
+
+
+if __name__ == '__main__':
+    raise RuntimeError("This script is not meant to be run directly.")
