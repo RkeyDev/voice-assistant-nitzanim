@@ -8,6 +8,7 @@ import threading
 import components.eye_tracker as eye_tracker
 import send_whatsapp
 import translating
+from game import start_game as game
 
 
 def repeat() -> None:
@@ -96,6 +97,11 @@ def start_comments(text: str = "") -> None:
     if search_speech("translate", text):
         text = remove_from_speech("translate |translate", text)
         translating.translate("he")
+
+    # commend game
+    if search_speech("start game| game", text):
+        text = remove_from_speech("start game |start game|game |game", text)
+        game()
 
     # commends handled - asking again
     print("What would you like to do ?")
