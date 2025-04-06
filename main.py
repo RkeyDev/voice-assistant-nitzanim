@@ -3,91 +3,118 @@ import components.speak as speak
 import assistant_actions
 import sys
 
-tries: int = 0
-is_app_running = True
 
+# noinspection PyMethodMayBeStatic
+class VoiceAssistantApp:
+    """
+    A voice-activated assistant application that listens to user input
+    and responds accordingly with greetings, exit commands, or unknown responses.
+    """
 
-def start_application() -> None:
-    print("Starting")
+    def __init__(self):
+        self.tries: int = 0
+        self.is_app_running: bool = True
 
-    while is_app_running:
-        try:
-            listen_to_voice_input()  # Listen to user voice input
-        except Exception as e:
-            handle_error(e)  # Handle an error
+    def run(self) -> None:
+        """
+        Starts the main application loop, listening to user input until the app exits
+        or the maximum number of failed attempts is reached.
+        """
+        print("Starting")
 
-        if tries >= 3:
-            quit_app()
+        while self.is_app_running:
+            try:
+                self.process_voice_input()
+            except Exception as e:
+                self.handle_exception(e)
 
-    print("app finished")
+            if self.tries >= 3:
+                self.exit_due_to_max_attempts()
 
+        print("app finished")
 
-def listen_to_voice_input():
-    text: str = listen.listen()  # Listen to user voice
-    if "python" in text or "peyton" in text:
-        handle_greeting(text)
+    def process_voice_input(self) -> None:
+        """
+        Processes voice input and dispatches to the appropriate handler
+        based on the input text.
+        """
+        text: str = listen.listen()
 
-    elif text == "None":
-        handle_no_input_detected()
+        if "python" in text or "peyton" in text:
+            self.respond_to_greeting(text)
 
-    elif text == "over" or text == "finish" or text == "exit":
-        handle_app_exit()
+        elif text == "None":
+            self.respond_to_no_input()
 
-    else:
-        handle_unknown_word(text)
+        elif text in {"over", "finish", "exit"}:
+            self.respond_to_exit_command()
 
+        else:
+            self.respond_to_unknown_input(text)
 
-def handle_greeting(text: str):
-    print("Hi ,I'm python")
-    speak.speak("Hi , I'm python")
-    # endregion
+    def respond_to_greeting(self, text: str) -> None:
+        """
+        Handles greeting input and initiates assistant actions.
+        """
+        print("Hi ,I'm python")
+        speak.speak("Hi , I'm python")
 
-    assistant_actions.start_comments(text)
-    # region end greeting
-    print("thanks for using python, good by :)")
-    speak.speak("thanks for using python, good by")
+        assistant_actions.start_comments(text)
 
-    is_app_running = False
+        print("thanks for using python, good by :)")
+        speak.speak("thanks for using python, good by")
 
+        self.is_app_running = False
 
-def handle_app_exit():
-    # region end greeting
-    print("you exited, thanks for using python, good bye :)")
-    speak.speak("you exited, thanks for using python, good bye")
-    # endregion
-    is_app_running = False
-    sys.exit()
+    def respond_to_exit_command(self) -> None:
+        """
+        Handles explicit app exit commands and terminates the program.
+        """
+        print("you exited, thanks for using python, good bye :)")
+        speak.speak("you exited, thanks for using python, good bye")
 
+        self.is_app_running = False
+        sys.exit()
 
-def handle_no_input_detected():
-    print("I cant hear anything")
-    speak.speak("I cant hear anything\n")
-    tries += 1
+    def respond_to_no_input(self) -> None:
+        """
+        Handles the case when no voice input is detected.
+        """
+        print("I cant hear anything")
+        speak.speak("I cant hear anything\n")
+        self.tries += 1
 
+    def respond_to_unknown_input(self, text: str) -> None:
+        """
+        Handles unrecognized voice input.
+        """
+        print(f"got this: {text}, try a different word")
+        speak.speak("try a different word")
 
-def handle_unknown_word(text):
-    print(f"got this: {text}, try a different word")
-    speak.speak("try a different word")
+    def handle_exception(self, error: Exception) -> None:
+        """
+        Handles exceptions during voice input processing.
+        """
+        print("you got an error, try again: " + str(error))
+        speak.speak("You got an error, try again")
 
+    def exit_due_to_max_attempts(self) -> None:
+        """
+        Gracefully quits the application after too many failed attempts.
+        """
+        print("quiting")
+        speak.speak("quiting")
 
-def handle_error(error: Exception):
-    print("you got an error, try again" + str(error))
-    speak.speak("You got an error, try again")
-
-
-def quit_app():
-    print("quiting")
-    speak.speak("quiting")
-
-    is_app_running = False
+        self.is_app_running = False
 
 
 def main() -> None:
     # TODO remove the comment when UI is done
-    """screen = window.MainScreen(run_app_func=startApplication)
-    target=screen.start_window()"""
+    """screen = window.MainScreen(run_app_func=app.start)
+    target = screen.start_window()"""
 
-    start_application()
+    app = VoiceAssistantApp()
+    app.run()
 
 
 if __name__ == '__main__':
