@@ -5,8 +5,8 @@ def start_game() -> None:
     from typing import Tuple, List
 
     # Constants
-    SCREEN_WIDTH: int = 400
-    SCREEN_HEIGHT: int = 600
+    SCREEN_WIDTH: int = 600
+    SCREEN_HEIGHT: int = 800
     GRAVITY: float = 0.5
     JUMP_STRENGTH: int = -10
     PIPE_GAP: int = 250

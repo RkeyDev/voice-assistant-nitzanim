@@ -89,17 +89,17 @@ def start_comments(text: str = "") -> None:
         threading.Thread(target=eye_tracker.run_eye_tracker()).start()  # run eye tracker
 
     # commend send
-    if search_speech("send|email|text", text):
-        text = remove_from_speech("send |sent|text |text|email |email", text)
+    if search_speech("send|text|what's up|whatsapp", text):
+        text = remove_from_speech("send |sent|text |text|what's up |what's up|whatsapp |whatsapp", text)
         send_whatsapp.send_whatapp()
 
     # commend translate
-    if search_speech("translate", text):
-        text = remove_from_speech("translate |translate", text)
-        translating.translate("he")
+    if search_speech("translate|trslate", text):
+        text = remove_from_speech("translate |translate|trslate |trslate", text)
+        print(translating.translate("he"))
 
     # commend game
-    if search_speech("start game| game", text):
+    if search_speech("start game|game", text):
         text = remove_from_speech("start game |start game|game |game", text)
         start_game()
 
