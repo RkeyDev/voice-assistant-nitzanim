@@ -6,6 +6,7 @@ import subprocess
 from typing import Union, NoReturn
 import threading
 import components.eye_tracker as eye_tracker
+import sys
 
 screen = None
 
@@ -47,6 +48,7 @@ def remove_from_speech(pattern: str, text: str) -> str:
 def start_comments(text: str = "") -> None:
     text = remove_from_speech(r"hey |hey|hi |hi|hello |hello|python |python|peyton |peyton|thank you |thank you|thanks |thanks|please |please|play |play|\d", text)
     if text in ("over", "finish", "exit", "stop"):
+        sys.exit()
         return
     if search_speech("repeat this|repeat", text):
         text = remove_from_speech("repeat this |repeat this|repeat |repeat", text)
