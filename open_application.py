@@ -1,13 +1,13 @@
 import os
 import components.speak as speak
 from typing import Union, NoReturn
-from assistant_actions import search_speech
+import assistant_actions
 
 
 def open_applications(text: str) -> Union[str | NoReturn]:
     path = ""
 
-    if search_speech("calender", text):
+    if assistant_actions.search_speech("calender|calendar", text):
         path = r"C:\Users\WIN11\Desktop\Google calendar.lnk"
 
     # TODO add more application
