@@ -1,14 +1,13 @@
 import listen as listen
 import components.speak as speak
 import re
-import os
 import subprocess
-from typing import Union, NoReturn
 import threading
 import components.eye_tracker as eye_tracker
 import send_whatsapp
 import translating
 from game import start_game
+from open_application import open_applications
 
 
 def repeat() -> None:
@@ -34,16 +33,6 @@ def search_chrome() -> None:
     profile_name = "Default"
 
     subprocess.run([chrome_path, f"--profile-directory={profile_name}", "--new-window", url])  # searching google
-
-
-def open_applications(text: str) -> Union[str | NoReturn]:
-    # in progress
-    calendar_shortcut_path = r"C:\Users\WIN11\Desktop\Google calendar.lnk"
-    os.startfile(calendar_shortcut_path)
-    print(text)
-
-    print(NotImplementedError("open - not implemented"))
-    speak.speak("open - not implemented")
 
 
 def search_speech(pattern: str, text: str) -> bool:
