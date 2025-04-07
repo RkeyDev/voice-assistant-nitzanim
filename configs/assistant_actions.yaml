@@ -1,0 +1,2 @@
+chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+profile_name = "Default"
