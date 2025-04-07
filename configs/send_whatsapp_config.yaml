@@ -1,0 +1,1 @@
+whatsapp_url = "https://web.whatsapp.com/send?phone={phone_number}&text={text}"
