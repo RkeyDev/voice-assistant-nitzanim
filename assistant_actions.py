@@ -1,3 +1,5 @@
+import pyautogui
+
 import key_press
 import listen as listen
 import components.speak as speak
@@ -91,7 +93,13 @@ def start_comments(text: str, screen: main_window.MainScreen) -> None:
     if search_speech("mouse", text):
         text = remove_from_speech("mouse |mouse", text)
         print("Starting eye tracker")
-        threading.Thread(target=eye_tracker.run_eye_tracker()).start()  # run eye tracker
+        try:
+            threading.Thread(target=eye_tracker.run_eye_tracker()).start()  # run eye tracker
+        except pyautogui.FailSafeException:
+            print("Exited mouse")
+            screen.update_status("Exited mouse")
+            speak.speak("Exited mouse")
+
 
     # commend send
     if search_speech("send|text|what's up|whatsapp", text):
