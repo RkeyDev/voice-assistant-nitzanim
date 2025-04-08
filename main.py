@@ -8,7 +8,6 @@ from UI.main_window import MainScreen
 class VoiceAssistantApp:
     def __init__(self, screen):
         self.screen: MainScreen = screen
-        listen.screen = self.screen
         self.tries = 0
         self.is_app_running = True
 
@@ -79,6 +78,7 @@ def main() -> None:
     app = VoiceAssistantApp(screen)
     screen.run_app_func = app.run
     assistant_actions.screen = screen
+    listen.screen = screen
     screen.start_window()
 
 

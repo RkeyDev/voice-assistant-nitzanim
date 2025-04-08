@@ -62,6 +62,7 @@ def remove_from_speech(pattern: str, text: str) -> str:
 
 
 def start_comments(text: str, screen: main_window.MainScreen) -> None:
+    print(text)
     # removing starting sentences(unneeded words)
     text = remove_from_speech(r"hey |hey|hi |hi|hello |hello|python |python|peyton |peyton|thank you |thank "
                               r"you|thanks |thanks|please |please|play |play|\\d|and |and|an |an", text)
@@ -74,17 +75,17 @@ def start_comments(text: str, screen: main_window.MainScreen) -> None:
     # commend repeat
     if search_speech("repeat this|repeat", text):
         text = remove_from_speech("repeat this |repeat this|repeat |repeat", text)
-        repeat()
+        repeat(screen)
 
     # commend open
     if search_speech("open up|open", text):
         text = remove_from_speech("open up |open up|open |open|start |start", text)
-        open_applications(text)
+        open_applications(text, screen)
 
     # commend search
     if search_speech("search", text):
         text = remove_from_speech("search |search", text)
-        search_chrome()
+        search_chrome(screen)
 
     # commend mouse
     if search_speech("mouse", text):
@@ -112,11 +113,12 @@ def start_comments(text: str, screen: main_window.MainScreen) -> None:
         text = remove_from_speech("press |press|keyboard |keyboard|keys |keys|key |key", text)
         key_press.press_keys(screen)
 
-        # commend press\keyboard\key
+    # commend press\keyboard\key
     if search_speech("transcribe", text):
         text = remove_from_speech("transcribe", text)
         voice_to_text.transcribe(screen)
 
+    print(text)
     # commends handled - asking again
     print("What would you like to do ?")
     screen.update_status("What would you like to do ?")

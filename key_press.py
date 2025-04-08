@@ -9,8 +9,9 @@ def press_keys(screen: main_window.MainScreen) -> None:
     while True:
         # asking for keys to press
         print("What to press ?")
+        screen.update_status("What to press ?")
         speak.speak("What to press ?")
-        text: str = listen.listen(screen)  # listening what key to press
+        text: str = listen.listen()  # listening what key to press
 
         # exit key press
         if text == "over" or text == "finish" or text == "exit" or text == "stop":
@@ -21,6 +22,10 @@ def press_keys(screen: main_window.MainScreen) -> None:
         except Exception as e:
             print(e)
             return None
+
+        print("Pressed")
+        screen.update_status("Pressed")
+        speak.speak("Pressed")
 
 
 if __name__ == '__main__':

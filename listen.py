@@ -50,7 +50,7 @@ def listen() -> Union[str, NoReturn]:
             except s.exceptions.UnknownValueError:
                 # couldn't translate audio to text
                 print("I couldn't understand, please repeat")
-                screen.update_status("Now speak please")
+                screen.update_status("I couldn't understand, please repeat")
                 speak.speak("I couldn't understand, please repeat")
 
             except s.exceptions.WaitTimeoutError:
