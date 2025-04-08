@@ -98,10 +98,14 @@ def start_game(app_screen: main_window.MainScreen) -> None:
             """Make the bird jump."""
             self.velocity = JUMP_STRENGTH
 
-        def update(self) -> None:
+        def update(self, mouse_pos: (int, int)) -> None:
             """Update the bird's position."""
-            self.velocity += GRAVITY
-            self.rect.top += self.velocity
+            if mouse_pos[1] > SCREEN_HEIGHT:
+                self.rect.top = SCREEN_HEIGHT
+            if mouse_pos[1] < 0:
+                self.rect.top = 0
+            else:
+                self.rect.top = mouse_pos[1]
 
         def draw(self, screen: pygame.Surface) -> None:
             """Draw the bird on the screen."""
@@ -181,12 +185,14 @@ def start_game(app_screen: main_window.MainScreen) -> None:
                     running = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     bird.jump()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    bird.jump()
 
             # Background
             screen.blit(background, (0, 0))
 
             # Bird update
-            bird.update()
+            bird.update(pygame.mouse.get_pos())
             bird.draw(screen)
 
             # Pipes update and Bird collision
