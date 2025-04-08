@@ -9,7 +9,8 @@ def speak(text: str) -> Union[None | NoReturn]:
         voice.runAndWait()
     except Exception as e:
         print(f"damn... you got this exception:")
-        raise e
+        print(e)
+        return None
 
 
 if __name__ == '__main__':

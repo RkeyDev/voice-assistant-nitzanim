@@ -1,3 +1,5 @@
+import time
+
 import listen
 from typing import Union
 import components.speak as speak
@@ -18,6 +20,7 @@ def transcribe(screen: main_window.MainScreen) -> Union[str, None]:
 
         screen.update_status(text)
         print(text)
+        time.sleep(3)
 
 
 if __name__ == '__main__':

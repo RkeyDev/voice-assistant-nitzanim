@@ -114,7 +114,7 @@ def start_comments(text: str, screen: main_window.MainScreen) -> None:
         key_press.press_keys(screen)
 
     # commend press\keyboard\key
-    if search_speech("transcribe", text):
+    if search_speech("transcribe|trscribe", text):
         text = remove_from_speech("transcribe", text)
         voice_to_text.transcribe(screen)
 
