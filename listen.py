@@ -1,12 +1,12 @@
 import speech_recognition as s
 import components.speak as speak
 from typing import NoReturn, Union
-from UI import main_window 
+from UI import main_window
 
 speech_ready: bool = False
 
 
-def adjust_for_speech(sr: s.Recognizer, source: s.Microphone,screen:main_window.MainScreen) -> None:
+def adjust_for_speech(sr: s.Recognizer, source: s.Microphone, screen: main_window.MainScreen) -> None:
     global speech_ready
 
     # if ambient noise already adjusted for
@@ -28,14 +28,14 @@ def adjust_for_speech(sr: s.Recognizer, source: s.Microphone,screen:main_window.
     speak.speak("Now speak please")
 
 
-def listen(screen:main_window.MainScreen) -> Union[str, NoReturn]:
+def listen(screen: main_window.MainScreen) -> Union[str, NoReturn]:
     sr: s.Recognizer = s.Recognizer()
 
     # opening microphone as sound source
     with s.Microphone() as main_source:
         while True:
             try:
-                adjust_for_speech(sr, main_source,screen)
+                adjust_for_speech(sr, main_source, screen)
                 audio: s.AudioData = sr.listen(main_source, phrase_time_limit=3, timeout=10)  # listening for speech
                 text = sr.recognize_google(audio)  # recognizing words from audio
                 text = text.lower()  # all lower case

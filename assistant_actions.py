@@ -7,26 +7,28 @@ import threading
 import components.eye_tracker as eye_tracker
 import send_whatsapp
 import translating
+import voice_to_text
+from UI import main_window
 from game import start_game
 from open_application import open_applications
 
 
-def repeat() -> None:
+def repeat(screen: main_window.MainScreen) -> None:
     # asking for repeat
     print("What to repeat ?")
     speak.speak("What to repeat ?")
-    text: str = listen.listen()  # listening what to repeat
+    text: str = listen.listen(screen)  # listening what to repeat
 
     # repeating
     print(f"You said {text}")
     speak.speak(f"You said {text}")
 
 
-def search_chrome() -> None:
+def search_chrome(screen: main_window.MainScreen) -> None:
     # asking for search
     print("What to search ?")
     speak.speak("What to search ?")
-    search: str = listen.listen()  # listening for what to search
+    search: str = listen.listen(screen)  # listening for what to search
 
     url = f"https://www.google.com/search?q={search.replace(' ', '+')}"  # creating url from speech
 
@@ -47,7 +49,7 @@ def remove_from_speech(pattern: str, text: str) -> str:
     return re.sub(pattern, "", text)  # removing all pattern occurrences from text
 
 
-def start_comments(text: str = "") -> None:
+def start_comments(text: str, screen: main_window.MainScreen) -> None:
     # removing starting sentences(unneeded words)
     text = remove_from_speech(r"hey |hey|hi |hi|hello |hello|python |python|peyton |peyton|thank you |thank "
                               r"you|thanks |thanks|please |please|play |play|\\d|and |and|an |an", text)
@@ -60,7 +62,7 @@ def start_comments(text: str = "") -> None:
     # commend repeat
     if search_speech("repeat this|repeat", text):
         text = remove_from_speech("repeat this |repeat this|repeat |repeat", text)
-        repeat()
+        repeat(screen)
 
     # commend open
     if search_speech("open up|open", text):
@@ -70,7 +72,7 @@ def start_comments(text: str = "") -> None:
     # commend search
     if search_speech("search", text):
         text = remove_from_speech("search |search", text)
-        search_chrome()
+        search_chrome(screen)
 
     # commend mouse
     if search_speech("mouse", text):
@@ -81,12 +83,12 @@ def start_comments(text: str = "") -> None:
     # commend send
     if search_speech("send|text|what's up|whatsapp", text):
         text = remove_from_speech("send |sent|text |text|what's up |what's up|whatsapp |whatsapp", text)
-        send_whatsapp.send_whatapp()
+        send_whatsapp.send_whatapp(screen)
 
     # commend translate
     if search_speech("translate|trslate", text):
         text = remove_from_speech("translate |translate|trslate |trslate", text)
-        print(translating.translate("he"))
+        print(translating.translate(screen, "he"))
 
     # commend game
     if search_speech("start game|game", text):
@@ -96,13 +98,18 @@ def start_comments(text: str = "") -> None:
     # commend press\keyboard\key
     if search_speech("press|keyboard|key", text):
         text = remove_from_speech("press |press|keyboard |keyboard|keys |keys|key |key", text)
-        key_press.press_keys()
+        key_press.press_keys(screen)
+
+        # commend press\keyboard\key
+    if search_speech("transcribe", text):
+        text = remove_from_speech("transcribe", text)
+        voice_to_text.transcribe(screen)
 
     # commends handled - asking again
     print("What would you like to do ?")
     speak.speak("What would you like to do ?")
-    new_commend: str = listen.listen()
-    start_comments(new_commend)
+    new_commend: str = listen.listen(screen)
+    start_comments(new_commend, screen)
 
     # endregion
 

@@ -1,20 +1,21 @@
 import listen
 from typing import Union
 import components.speak as speak
+from UI import main_window
 
 
-def transcribe() -> Union[str, None]:
+def transcribe(screen: main_window.MainScreen) -> Union[str, None]:
     while True:
         # asking for transcribe
         print("What to transcribe ?")
         speak.speak("What to transcribe ?")
-        text: str = listen.listen()  # listening what to transcribe
+        text: str = listen.listen(screen)  # listening what to transcribe
 
         # exit key press
         if text == "over" or text == "finish" or text == "exit" or text == "stop":
             return None
 
-        # TODO integrate with UI
+        screen.update_status(text)
         print(text)
 
 

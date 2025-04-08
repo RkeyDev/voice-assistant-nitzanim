@@ -4,12 +4,14 @@ import webbrowser
 import pyautogui
 import time
 
+from UI import main_window
 
-def send_whatapp() -> None:
+
+def send_whatapp(screen: main_window.MainScreen) -> None:
     # asking for a message
     print("What is the message ?")
     speak.speak("What is the message ?")
-    text: str = listen.listen()  # listening for a message
+    text: str = listen.listen(screen)  # listening for a message
 
     # exit key press
     if text == "over" or text == "finish" or text == "exit" or text == "stop":

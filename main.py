@@ -4,6 +4,7 @@ import assistant_actions
 import sys
 from UI.main_window import MainScreen
 
+
 class VoiceAssistantApp:
     def __init__(self, screen):
         self.screen = screen
@@ -36,7 +37,7 @@ class VoiceAssistantApp:
         self.screen.update_status("Hi, I'm python")
         print("Hi ,I'm python")
         speak.speak("Hi , I'm python")
-        assistant_actions.start_comments(text)
+        assistant_actions.start_comments(text, self.screen)
         self.screen.update_status("thanks for using python, good bye")
         print("thanks for using python, good bye")
         speak.speak("thanks for using python, good bye")
@@ -71,12 +72,14 @@ class VoiceAssistantApp:
         speak.speak("quiting")
         self.is_app_running = False
 
+
 def main() -> None:
     screen = MainScreen(run_app_func=lambda: None)
     app = VoiceAssistantApp(screen)
     screen.run_app_func = app.run
     assistant_actions.screen = screen
     screen.start_window()
+
 
 if __name__ == '__main__':
     main()
