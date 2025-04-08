@@ -10,8 +10,9 @@ from UI import main_window
 def send_whatapp(screen: main_window.MainScreen) -> None:
     # asking for a message
     print("What is the message ?")
+    screen.update_status("What is the message ?")
     speak.speak("What is the message ?")
-    text: str = listen.listen(screen)  # listening for a message
+    text: str = listen.listen()  # listening for a message
 
     # exit key press
     if text == "over" or text == "finish" or text == "exit" or text == "stop":
@@ -31,6 +32,10 @@ def send_whatapp(screen: main_window.MainScreen) -> None:
     except Exception as e:
         print(e)
         return None
+
+    print("Massage sent")
+    screen.update_status("Massage sent")
+    speak.speak("Massage sent")
 
 
 if __name__ == '__main__':

@@ -5,9 +5,12 @@ from UI import main_window
 
 speech_ready: bool = False
 
+screen: Union[None, main_window.MainScreen] = None
 
-def adjust_for_speech(sr: s.Recognizer, source: s.Microphone, screen: main_window.MainScreen) -> None:
+
+def adjust_for_speech(sr: s.Recognizer, source: s.Microphone) -> None:
     global speech_ready
+    global screen
 
     # if ambient noise already adjusted for
     if speech_ready:
@@ -28,14 +31,14 @@ def adjust_for_speech(sr: s.Recognizer, source: s.Microphone, screen: main_windo
     speak.speak("Now speak please")
 
 
-def listen(screen: main_window.MainScreen) -> Union[str, NoReturn]:
+def listen() -> Union[str, NoReturn]:
     sr: s.Recognizer = s.Recognizer()
 
     # opening microphone as sound source
     with s.Microphone() as main_source:
         while True:
             try:
-                adjust_for_speech(sr, main_source, screen)
+                adjust_for_speech(sr, main_source)
                 audio: s.AudioData = sr.listen(main_source, phrase_time_limit=3, timeout=10)  # listening for speech
                 text = sr.recognize_google(audio)  # recognizing words from audio
                 text = text.lower()  # all lower case

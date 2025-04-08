@@ -7,7 +7,8 @@ from UI.main_window import MainScreen
 
 class VoiceAssistantApp:
     def __init__(self, screen):
-        self.screen = screen
+        self.screen: MainScreen = screen
+        listen.screen = self.screen
         self.tries = 0
         self.is_app_running = True
 
@@ -23,7 +24,7 @@ class VoiceAssistantApp:
         print("app finished")
 
     def process_voice_input(self) -> None:
-        text = listen.listen(self.screen)
+        text = listen.listen()
         if "python" in text or "peyton" in text:
             self.respond_to_greeting(text)
         elif text == "None":

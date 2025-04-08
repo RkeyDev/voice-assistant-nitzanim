@@ -8,8 +8,9 @@ from UI import main_window
 def translate(screen: main_window.MainScreen, to_language: str = "he") -> str:
     # asking for a sentence to translate
     print("What to translate ?")
+    screen.update_status("What to translate ?")
     speak.speak("What to translate ?")
-    text: str = listen.listen(screen)  # listening for sentence
+    text: str = listen.listen()  # listening for sentence
 
     # exit key press
     if text == "over" or text == "finish" or text == "exit" or text == "stop":

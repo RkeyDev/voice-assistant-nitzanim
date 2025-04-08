@@ -5,9 +5,10 @@ import pyautogui
 import components.speak as speak
 from typing import Union, NoReturn
 import assistant_actions
+from UI import main_window
 
 
-def open_applications(text: str) -> Union[str | NoReturn]:
+def open_applications(text: str, screen: main_window.MainScreen) -> Union[str | NoReturn]:
     path = ""
 
     # speech check's
@@ -27,6 +28,7 @@ def open_applications(text: str) -> Union[str | NoReturn]:
     # path check's
     if path == "None":
         print(f"starting {text} application")
+
         speak.speak(f"starting {text} application")
         return None
 
@@ -37,6 +39,7 @@ def open_applications(text: str) -> Union[str | NoReturn]:
     try:
         os.startfile(path)
         print(f"starting {text} application")
+        screen.update_status(f"starting {text} application")
         speak.speak(f"starting {text} application")
 
     except FileNotFoundError:

@@ -1,4 +1,8 @@
-def start_game() -> None:
+from components.speak import speak
+from UI import main_window
+
+
+def start_game(app_screen: main_window.MainScreen) -> None:
     import pygame
     import random
     import json
@@ -228,7 +232,15 @@ def start_game() -> None:
         show_game_over(score)
         pygame.quit()
 
+    print("Starting game")
+    app_screen.update_status("Starting game")
+    speak("Starting game")
+
     main()
+
+    print("Game ended")
+    app_screen.update_status("Game ended")
+    speak("Game ended")
 
 
 if __name__ == '__main__':
