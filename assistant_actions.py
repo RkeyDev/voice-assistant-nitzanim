@@ -93,7 +93,7 @@ def start_comments(text: str = "") -> None:
         text = remove_from_speech("start game |start game|game |game", text)
         start_game()
 
-    # commend game
+    # commend press\keyboard\key
     if search_speech("press|keyboard|key", text):
         text = remove_from_speech("press |press|keyboard |keyboard|keys |keys|key |key", text)
         key_press.press_keys()
