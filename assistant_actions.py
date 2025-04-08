@@ -1,3 +1,4 @@
+import key_press
 import listen as listen
 import components.speak as speak
 import re
@@ -91,6 +92,11 @@ def start_comments(text: str = "") -> None:
     if search_speech("start game|game", text):
         text = remove_from_speech("start game |start game|game |game", text)
         start_game()
+
+    # commend game
+    if search_speech("press|keyboard|key", text):
+        text = remove_from_speech("press |press|keyboard |keyboard|keys |keys|key |key", text)
+        key_press.press_keys()
 
     # commends handled - asking again
     print("What would you like to do ?")
